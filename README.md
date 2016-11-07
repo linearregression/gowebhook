@@ -5,7 +5,7 @@ A bare bones example where I demonstrate how to use the [Go Facebook Graph API S
 + Install Golang
 + Create an [App] (https://developers.facebook.com/docs/apps/register)
 + Install [Heroku CLI] (https://devcenter.heroku.com/articles/heroku-command-line)
-+ Clone this repo
++ Clone this repo to your $GOPATH correctly
 + `cd` into this repo and run `go get github.com/tools/godep`
 + run `godep save`. This tells Heroku which packages are imported in the application
 + add Go buildpack `heroku create -b https://github.com/kr/heroku-buildpack-go.git`
