@@ -23,7 +23,7 @@ In order to see activity live, run `heroku logs --tail` in the cloned repo, log 
 Voila!
 
 Inspired by
-+ [Building Webapps With Go] (https://codegangsta.gitbooks.io/building-web-apps-with-go/content/deployment/index.html)
++ [Building Webapps With Go] (https://codegangsta.gitbooks.io/building-web-apps-with-go/content/index.html)
 + [Socketloop tutorial] (https://socketloop.com/tutorials/golang-login-authenticate-with-facebook-example)
 
 
