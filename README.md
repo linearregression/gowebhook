@@ -9,7 +9,7 @@ A bare bones example where I demonstrate how to use the [Go Facebook Graph API S
 + `cd` into this repo and run `go get github.com/tools/godep`
 + run `godep save`. This tells Heroku which packages are imported in the application
 + add Go buildpack `heroku create -b https://github.com/kr/heroku-buildpack-go.git`
-+ `git push heroku master`
++ add and commit all generated files, then run `git push heroku master`
 + open your application on the specified URL
 
 Voila!
