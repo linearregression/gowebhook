@@ -1,0 +1,29 @@
+{
+	"ImportPath": "github.com/heroku/gowebhook",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v75",
+	"Deps": [
+		{
+			"ImportPath": "github.com/huandu/facebook",
+			"Comment": "v1.7.1-2-g09d747b",
+			"Rev": "09d747bf3afe65c084508baa5d25a2553ce21496"
+		},
+		{
+			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Comment": "v1.1-38-g4563b0b",
+			"Rev": "4563b0ba73e4db6c6423b60a26f3cadd2e9a1ec9"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "55a3084c9119aeb9ba2437d595b0a7e9cb635da9"
+		},
+		{
+			"ImportPath": "golang.org/x/oauth2",
+			"Rev": "36bc61733fc9aafc59f010d5e6bfefb63b007fd7"
+		},
+		{
+			"ImportPath": "golang.org/x/oauth2/internal",
+			"Rev": "36bc61733fc9aafc59f010d5e6bfefb63b007fd7"
+		}
+	]
+}
