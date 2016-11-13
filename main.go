@@ -1,13 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
-	"strings"
 
 	fb "github.com/huandu/facebook"
 	"golang.org/x/oauth2"
@@ -15,18 +15,16 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// Request object when an event we are subscribed to occurs
-type Request struct {
-	Entry  EntryStruct
-	Object string
-}
-
-// EntryStruct object contained by Entry field of above struct
-type EntryStruct struct {
-	time          int
-	id            string
-	changedFields []string
-	uid           string
+// PostJSON struct which marshals a JSON object
+// when an event we are subscribed to occurs
+type PostJSON struct {
+	Entry []struct {
+		Time          int      `json:"time"`
+		ID            string   `json:"id"`
+		ChangedFields []string `json:"changed_fields"`
+		UID           string   `json:"uid"`
+	} `json:"entry"`
+	Object string `json:"object"`
 }
 
 // Init initialises the Facebook authentication for our application
@@ -52,11 +50,11 @@ func Init(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 // FBSubscribe subscribes the registered user to our application
 func FBSubscribe(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	_, err := fb.Post("/YOUR_APP_ID/subscriptions", fb.Params{
-		"object":       "user", // Can be user, page, permission or payments
+		"object":       "user",                  // Can be user, page, permission or payments
 		"access_token": "YOUR_APP_ACCESS_TOKEN", // copy the token which is generated from the Graph API explorer after selecting "Get App token" in the top right
 		"callback_url": "https://call_back_url.com/facebook",
 		"fields":       "feed, friends, likes, link, status, statuses, username", // What you subscribe to
-		"verify_token": "token", //accessToken, make it more secure
+		"verify_token": "token",                                                  //accessToken, make it more secure
 	})
 
 	if err != nil {
@@ -89,30 +87,21 @@ func PostFacebook(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	*/
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		panic("WWW")
+		fmt.Println(err)
 	}
 	log.Println(string(body))
 
-	res := regexp.MustCompile("([^ ]+[ ][^ ]+)[ ](.*)") // Split after second space
-	re := res.FindAllString(string(body), -1)
-	s := ""
-	for _, v := range re { // size of one
-		fmt.Println(v)
-		s = v
+	regex := regexp.MustCompile("([^ ]+[ ][^ ]+)[ ](.*)") // Split after second space
+	result := regex.FindAllString(string(body), -1)       // -1 indicates all possible matches to return
+
+	postJSON := []byte(result[0])
+
+	var postJSONStruct = new(PostJSON)
+	err = json.Unmarshal(postJSON, &postJSONStruct)
+	if err != nil {
+		fmt.Println(err)
 	}
-
-	strs := strings.Split(s, ",")
-	for _, i := range strs {
-		fmt.Println(i)
-	}
-
-	// TODO construct JSON structs
-	fmt.Println(strings.Split(strs[0], " ")[2])
-	fmt.Println(strings.Split(strs[1], " ")[2])
-	fmt.Println(strings.Split(strings.Split(strs[2], " ")[2], ",")[0]) // Needs to be cleaned
-	fmt.Println(strings.Split(strs[3], " ")[2])
-	fmt.Println(strings.Split(strs[4], " ")[2])
-
+	fmt.Println("%+v\n", postJSONStruct)
 }
 
 func main() {
