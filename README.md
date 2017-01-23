@@ -1,7 +1,7 @@
 # gowebhook
 A bare bones example where I demonstrate how to use the [Go Facebook Graph API SDK] (https://github.com/huandu/facebook) to set up a webhook to a Facebook App.
 
-## Wedsite Setup
+## Website Setup
 + Install Golang
 + Create an [App] (https://developers.facebook.com/docs/apps/register)
 + Install [Heroku CLI] (https://devcenter.heroku.com/articles/heroku-command-line)
